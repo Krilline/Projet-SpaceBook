@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+use App\Model\LoginManager;
 
 class HomeController extends AbstractController
 {
@@ -22,5 +23,10 @@ class HomeController extends AbstractController
     public function index()
     {
         return $this->twig->render('Home/index.html.twig');
+    }
+
+    public function login()
+    {
+        return $this->twig->render('Home/login.html.twig');
     }
 }
