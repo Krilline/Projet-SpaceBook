@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+
 use App\Model\LoginManager;
 
 class HomeController extends AbstractController
