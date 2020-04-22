@@ -20,10 +20,15 @@ class ProfileManager extends AbstractManager
      */
     const TABLE = 'user';
 
+    public function __construct()
+    {
+        parent::__construct(self::TABLE);
+    }
+
     public function selectUserProfile(): array
     {
         return $this->pdo->query(" SELECT firstname, lastname, pseudo,
-  date_of_birth, planet, password, email, role, avatar  FROM " . $this->table . "
+  date_of_birth, planet_name, password, email, role, avatar  FROM " . self::TABLE . "
         JOIN role ON role.id=user.role_id JOIN planet ON planet.id=user.planet_id")->fetchAll();
     }
 }
