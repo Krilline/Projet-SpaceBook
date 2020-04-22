@@ -8,6 +8,9 @@
 
 namespace App\Controller;
 
+use App\Model\GalaxyManager;
+use App\Model\PlanetManager;
+
 class HomeController extends AbstractController
 {
 
@@ -30,5 +33,17 @@ class HomeController extends AbstractController
             header('Location:/profile/index');
         }
         return $this->twig->render('Home/login.html.twig');
+    }
+
+    public function signUp()
+    {
+        $galaxyManager = new GalaxyManager();
+        $galaxys = $galaxyManager->selectUserGalaxy();
+        $planetManager = new PlanetManager();
+        $planets = $planetManager->selectUserPlanet();
+        return $this->twig->render('Home/sign_up.html.twig', [
+            'galaxys' => $galaxys,
+            'planets' => $planets
+        ]);
     }
 }
