@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Edit profile {{ profile.firstname ~" "~ profile.lastname }} </h1>
+    <form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="firstname">Firstname</label>
+            <input type="text" class="form-control" id="firstname" value="{{ profile.firstname }}" name="firstname">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="pseudo">Pseudo</label>
+            <input type="text" class="form-control" id="pseudo" value="{{ profile.pseudo }}" name="pseudo">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">Lastname</label>
+            <input type="text" class="form-control" id="lastname" value="{{ profile.lastname }}" name="lastname">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="galaxy">Galaxy</label>
+            <select id="galaxy" class="form-control" name="galaxy">
+                {% for galaxy in galaxys %}
+                    <option selected>{{ galaxy.galaxy_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">Email (ID)</label>
+            <input type="email" class="form-control" id="email" value="{{ profile.email }}" name="email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="planet">Planet</label>
+            <select id="planet" class="form-control" name="planet">
+                {% for planet in planets %}
+                    <option selected>{{ planet.planet_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="firstname">Password</label>
+            <input type="password" class="form-control" id="password" value="{{ profile.password }}" name="password">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="pseudo">Date of Birth</label>
+            <input type="date" class="form-control" id="date_of_birth" value="{{ profile.date_of_birth }}" name="date_of_birth">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" rows="5"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign up</button>
+
+{% endblock %}
