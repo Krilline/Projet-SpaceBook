@@ -28,6 +28,6 @@ class GalaxyManager extends AbstractManager
 
     public function selectUserGalaxy(): array
     {
-        return $this->pdo->query(" SELECT galaxy_name FROM " . self::TABLE)->fetchAll();
+        return $this->pdo->query(" SELECT id, galaxy_name FROM " . self::TABLE)->fetchAll();
     }
 }

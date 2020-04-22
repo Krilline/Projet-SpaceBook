@@ -1,8 +1,8 @@
-<form>
+<form method="post">
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="firstname">Firstname *</label>
-            <input type="text" class="form-control" id="firstname" placeholder="firstname" name="pseudo">
+            <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
         </div>
         <div class="form-group col-md-6">
             <label for="pseudo">Pseudo *</label>
@@ -18,7 +18,7 @@
             <label for="galaxy">Galaxy *</label>
             <select id="galaxy" class="form-control" name="galaxy">
                 {% for galaxy in galaxys %}
-                    <option selected>{{ galaxy.galaxy_name }}</option>
+                    <option value="{{ galaxy.id }}">{{ galaxy.galaxy_name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -30,21 +30,22 @@
         </div>
         <div class="form-group col-md-6">
             <label for="planet">Planet *</label>
-            <select id="planet" class="form-control" name="planet">
+            <select id="planet" class="form-control" name="planet_id">
                 {% for planet in planets %}
-                    <option selected>{{ planet.planet_name }}</option>
+                    <option value="{{ planet.id }}">{{ planet.planet_name }}</option>
                 {% endfor %}
             </select>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="firstname">Password *</label>
+            <label for="password">Password *</label>
             <input type="password" class="form-control" id="password" placeholder="password" name="password">
         </div>
         <div class="form-group col-md-6">
-            <label for="pseudo">Date of Birth</label>
+            <label for="date_of_birth">Date of Birth</label>
             <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Sign up</button>
+</form>
