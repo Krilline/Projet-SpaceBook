@@ -28,6 +28,9 @@ class HomeController extends AbstractController
 
     public function login()
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            header('Location:/profile/index');
+        }
         return $this->twig->render('Home/login.html.twig');
     }
 }

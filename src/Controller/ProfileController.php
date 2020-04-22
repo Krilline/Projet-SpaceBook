@@ -7,10 +7,10 @@ use App\Model\ProfileManager;
 
 class ProfileController extends AbstractController
 {
-    public function profile()
+    public function index()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            return $this->twig->render('Profile/profile.html.twig');
-        }
+        $profileManager = new ProfileManager();
+        $profile = $profileManager->selectUserProfile();
+        return $this->twig->render('Profile/profile.html.twig', ['profile' => $profile]);
     }
 }
