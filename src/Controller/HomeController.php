@@ -9,6 +9,9 @@
 namespace App\Controller;
 
 use App\Model\ContactManager;
+use App\Model\GalaxyManager;
+use App\Model\PlanetManager;
+use App\Model\ProfileManager;
 
 class HomeController extends AbstractController
 {
@@ -47,5 +50,44 @@ class HomeController extends AbstractController
             header('Location:/');
         }
         return $this->twig->render('Home/contactform.html.twig');
+    }
+
+    public function signUp()
+    {
+        $galaxyManager = new GalaxyManager();
+        $galaxys = $galaxyManager->selectUserGalaxy();
+        $planetManager = new PlanetManager();
+        $planets = $planetManager->selectUserPlanet();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['pseudo'])
+                && !empty($_POST['date_of_birth']) && !empty($_POST['planet_id']) && !empty($_POST['password'])
+                && !empty($_POST['email'])) {
+                $profileManager = new ProfileManager();
+                $profile = [
+                    'firstname' => $_POST['firstname'],
+                    'lastname' => $_POST['lastname'],
+                    'pseudo' => $_POST['pseudo'],
+                    'date_of_birth' => $_POST['date_of_birth'],
+                    'planet_id' => $_POST['planet_id'],
+                    'password' => $_POST['password'],
+                    'email' => $_POST['email']
+                ];
+                $profileManager->createUserProfile($profile);
+                header('Location:/');
+            } else {
+                $errors = [
+                    'form' => '* Fields are missing *'
+                ];
+                return $this->twig->render('Home/sign_up.html.twig', [
+                    'errors' => $errors,
+                    'galaxys' => $galaxys,
+                    'planets' => $planets
+                ]);
+            }
+        }
+        return $this->twig->render('Home/sign_up.html.twig', [
+            'galaxys' => $galaxys,
+            'planets' => $planets,
+        ]);
     }
 }
