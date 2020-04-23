@@ -21,7 +21,7 @@ class ProfileController extends AbstractController
         $profileManager = new ProfileManager();
         $profile = $profileManager->selectOneById($id);
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $profile['firstname'] = $_POST['firstname'];
             $profile['lastname'] = $_POST['lastname'];
             $profile['pseudo'] = $_POST['pseudo'];
