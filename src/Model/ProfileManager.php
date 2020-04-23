@@ -45,7 +45,7 @@ class ProfileManager extends AbstractManager
         $statement->bindValue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $statement->bindValue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $statement->bindValue('pseudo', $user['pseudo'], \PDO::PARAM_STR);
-        $statement->bindValue('date_of_birth', $user['date_of_birth'], \PDO::PARAM_INT);
+        $statement->bindValue('date_of_birth', $user['date_of_birth'], \PDO::PARAM_STR);
         $statement->bindValue('planet_id', $user['planet_id'], \PDO::PARAM_INT);
         $statement->bindValue('password', $user['password'], \PDO::PARAM_STR);
         $statement->bindValue('email', $user['email'], \PDO::PARAM_STR);
