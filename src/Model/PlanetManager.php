@@ -28,6 +28,6 @@ class PlanetManager extends AbstractManager
 
     public function selectUserPlanet(): array
     {
-        return $this->pdo->query(" SELECT planet_name FROM " . self::TABLE)->fetchAll();
+        return $this->pdo->query(" SELECT id, planet_name FROM " . self::TABLE)->fetchAll();
     }
 }
