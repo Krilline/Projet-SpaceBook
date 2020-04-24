@@ -1,5 +1,24 @@
 {% extends 'layout.html.twig' %}
-
 {% block content %}
-    <h1>Hello Wilder !</h1>
+    <section class = "bio">
+        <div class="text">
+            <h2>Biography</h2>
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas feugiat non risus nec varius. Vestibulum non bibendum quam. Aliquam pharetra, ex nec tempus tristique, sem nibh eleifend ex, ut finibus orci orci vitae mauris. Vestibulum vitae sem eget mi luctus volutpat. Vestibulum maximus enim vel mi pellentesque, a accumsan libero maximus. Pellentesque sem nisi, euismod quis venenatis ac, rhoncus in enim. Vestibulum interdum nisi vel suscipit scelerisque. Praesent eu velit feugiat, euismod dolor sit amet, rhoncus lacus. In a blandit lectus, non elementum ipsum. Praesent mattis libero vel libero tristique, et pharetra sapien dictum. Pellentesque ligula mauris, cursus in hendrerit sit amet, pretium in nisi.</p>
+        </div>
+        <div>
+            <img class="img" src="https://media.giphy.com/media/xT9IgioE60R9797Uc0/giphy.gif" alt="image planet">
+        </div>
+    </section>
+    <section class= "redirected">
+        <div class= "row">
+            <div class= "col-3"></div>
+            <div class= "col-2">
+                <a href="/home/signUp"><i class="em em-alien" aria-role="presentation" aria-label="EXTRATERRESTRIAL ALIEN"></i> Sign Up </a>
+            </div>
+            <div class= "col-2"></div>
+            <div class= "col-3">
+                <a href="/home/login"><i class="em em-rocket" aria-role="presentation" aria-label="ROCKET"></i>Login</a>
+            </div>
+        </div>
+    </section>
 {% endblock %}
