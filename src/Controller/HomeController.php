@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Model\ContactManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
 use App\Model\ProfileManager;
@@ -34,6 +35,21 @@ class HomeController extends AbstractController
             header('Location:/profile/index');
         }
         return $this->twig->render('Home/login.html.twig');
+    }
+
+    public function contact()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $contactManager = new ContactManager();
+            $contact = [
+                'email' => $_POST['email'],
+                'subject' => $_POST['subject'],
+                'message' => $_POST['message'],
+            ];
+            $contactManager->insert($contact);
+            header('Location:/');
+        }
+        return $this->twig->render('Home/contactform.html.twig');
     }
 
     public function signUp()
