@@ -47,7 +47,7 @@ class HomeController extends AbstractController
                 'message' => $_POST['message'],
             ];
             $contactManager->insert($contact);
-            header('Location:/');
+            header('Location:/');/** retour à la page Home en version WIP */
         }
         return $this->twig->render('Home/contactform.html.twig');
     }
