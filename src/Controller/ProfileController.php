@@ -12,14 +12,22 @@ class ProfileController extends AbstractController
     public function index()
     {
         $profileManager = new ProfileManager();
-        $profile = $profileManager->selectUserProfile();
+        $profile = [
+            'email' => $_SESSION['email'],
+            'password' => $_SESSION['password'],
+        ];
+        $profile = $profileManager->selectUserProfile($profile);
         return $this->twig->render('Profile/profile.html.twig', ['profile' => $profile]);
     }
 
-    public function edit(int $id)
+    public function edit()
     {
         $profileManager = new ProfileManager();
-        $profile = $profileManager->selectOneById($id);
+        $user = [
+            'email' => $_SESSION['email'],
+            'password' => $_SESSION['password'],
+        ];
+        $profile = $profileManager->selectUserProfile($user);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $profile['firstname'] = $_POST['firstname'];
@@ -31,6 +39,8 @@ class ProfileController extends AbstractController
             $profile['email'] = $_POST['email'];
             $profile['avatar'] = $_POST['avatar'];
             $profile['description'] = $_POST['description'];
+            $profile['useremail'] = $_SESSION['email'];
+            $profile['userpassword'] = $_SESSION['password'];
             $profileManager->updateProfile($profile);
             header("Location:/profile/index");
         }
