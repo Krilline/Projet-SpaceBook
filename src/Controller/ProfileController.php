@@ -55,5 +55,4 @@ class ProfileController extends AbstractController
             'profile' => $profile
         ]);
     }
-
 }
