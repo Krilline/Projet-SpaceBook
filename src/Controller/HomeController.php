@@ -32,7 +32,33 @@ class HomeController extends AbstractController
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            header('Location:/profile/index');
+            if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                $profileManager = new ProfileManager();
+                $user = [
+                    'email' => $_POST['email'],
+                    'password' => $_POST['password'],
+                ];
+                //FONCTION POUR CHECKER SI LE USER EXISTE
+                $result = $profileManager->checkUserProfile($user);
+                if ($result === true) {
+                    $_SESSION['login'] = true;
+                    $_SESSION['email'] = $_POST['email'];
+                    $_SESSION['password'] = $_POST['password'];
+                    header('Location:/profile/index');
+                } else {
+                    //MESSAGE D'ERREUR SI USER NON EXISTANT
+                    $error['wrong_login'] = 'Email or Password incorrect !';
+                    return $this->twig->render('Home/login.html.twig', [
+                        'error_user' => $error['wrong_login'],
+                    ]);
+                }
+            } else {
+                //MESSAGE D'ERREUR SI CHAMPS VIDES
+                $error['login_empty'] = 'Email or Password Missing !';
+                return $this->twig->render('Home/login.html.twig', [
+                    'error_empty' => $error['login_empty'],
+                ]);
+            }
         }
         return $this->twig->render('Home/login.html.twig');
     }
