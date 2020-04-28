@@ -1,61 +1,57 @@
+body{
+    margin: 0;
+    padding-top: 150px;
+}
 /*Header*/
-nav{
-    height:150px;
-    margin-bottom: 50px;
+.navbar, .fixed-top, .navbar-expand-lg, .navbar-light, .bg-light{
+    width: 100%;
+    background: linear-gradient(#FF504A, #FF8956);
 }
 
-nav .container{
-    background-image:url("../images/8d6b26788e25b7e0e404b5585cd09438.gif");
-    height: 100%;
-    border-radius: 10px;
-}
-
-nav .container .row .col-2 {
-    text-align: center;
-    padding:10px;
-}
-
-nav .container .row .col-2 a{
+.nav-link{
+    font-family: 'Press Start 2P', cursive;
+    margin-left: 40px;
     text-decoration: none;
-    color:white;
+    background: -webkit-gradient(linear, left top, left bottom, from(#1A171F), to(#262278));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
 
-nav .container .row .col-4 h1{
-    color:white;
+.navbar-brand {
+    padding-right: 10px;
+    font-size: 40px;
+    font-family: 'Press Start 2P', cursive;
+    background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#045FB4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /*footer*/
 footer{
-    height: 150px;    
+    margin-top: 10%;
+    bottom: 0;
+    width: 100%;
 }
 
-footer .container{
-    background-image:url("../images/8d6b26788e25b7e0e404b5585cd09438.gif");
-    padding-top: 40px;
-    padding-bottom: 20px;
-    margin-top: 50px;
-    border-radius: 10px;
+footer .nav, .fixed-bottom, .justify-content-center{
+    background: linear-gradient(#FF504A, #FF8956);
+    padding-top: 20px;
+    text-align: center;
 }
 
-footer .container .row {
-    height: 50px;
+.copyright {
+    display: flex;
+    padding-top: 9px;
 }
-
-footer .container .row .col-2 a{
-    text-decoration: none;
-    color:white;
-    font-weight: bold;
-}
-
-body {
-    margin: 0;
-    padding: 0;
+footer .nav-link{
+    margin-left: 0;
 }
 
 /*logo nav*/
 .logo{
-    width: 60px;
+    width: 50px;
+    padding-bottom: 20px;
 }
 
 /*home page*/
@@ -68,7 +64,6 @@ body {
     justify-content: space-between;
     line-height:30px;
     text-align: justify;
-    margin-top: 10%;
 }
 
 .text{
@@ -76,6 +71,7 @@ body {
 }
 
 .text h2{
+    font-family: 'Press Start 2P', cursive;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-image: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet);
@@ -89,12 +85,29 @@ body {
     height:300px;
 }
 
-.col-3{
+.button{
+    font-family: 'Press Start 2P', cursive;
+    padding: 5px;
+    background: linear-gradient(#FF504A, #FF8956);
     margin-top: 10%;
-    font-size: 25px;
+    font-size: 15px;
+    margin-left: 10%;
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px
+    rgba(79,209,197,.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+}
+.button a{
+    background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#045FB4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.button:hover, .button:focus {
+    color: #313133;
+    transform: translateY(-6px);
 }
 
-.col-2{
-    margin-top: 10%;
-    font-size: 25px;
-}
+
