@@ -75,4 +75,12 @@ class ProfileManager extends AbstractManager
             return (int)$this->pdo->lastInsertId();
         }
     }
+
+    public function deleteUserProfile(int $id)
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE user.id = :id");
+        $statement = bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+    }
+
 }

@@ -44,4 +44,16 @@ class ProfileController extends AbstractController
             'profile' => $profile
         ]);
     }
+
+    public function delete(int $id)
+    {
+        $profileManager = new ProfileManager();
+        $profile = $profileManager->selectOneById($id);
+        $profileManager->deleteUserProfile($profile);
+        header("Location:/home/index");
+        return $this->twig->render('Profile/delete.html.twig', [
+            'profile' => $profile
+        ]);
+    }
+
 }
