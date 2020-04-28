@@ -55,14 +55,17 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    public function delete(int $id)
+    public function delete()
     {
         $profileManager = new ProfileManager();
-        $profile = $profileManager->selectOneById($id);
-        $profileManager->deleteUserProfile($profile);
+        //var_dump($_SESSION); die;
+        $user = ['email' => $_SESSION['email']];
+        //$user = ['id' => $_SESSION['id']];
+        $profile = $profileManager->deleteUserProfile($user);
+        //$profile = $profileManager->selectUserProfile($user);
+        //$profileManager->deleteUserProfile($profile);
         header("Location:/home/index");
-        return $this->twig->render('Profile/delete.html.twig', [
-            'profile' => $profile
-        ]);
+        //return $this->twig->render('Profile/delete.html.twig', ['user' => $user]);
+        return $this->twig->render('Profile/delete.html.twig', ['profile' => $profile]);
     }
 }
