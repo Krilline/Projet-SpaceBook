@@ -46,10 +46,24 @@ class HomeController extends AbstractController
                 'subject' => $_POST['subject'],
                 'message' => $_POST['message'],
             ];
+            $_SESSION["emailcontact"]=$_POST["email"];
+            $_SESSION["subjectcontact"]=$_POST["subject"];
             $contactManager->insert($contact);
-            header('Location:/');
+            header('Location:/Home/sendMessage');
         }
         return $this->twig->render('Home/contactform.html.twig');
+    }
+
+    public function sendMessage()
+    {
+        $send = [
+            'email' => $_SESSION['emailcontact'],
+            'subject' => $_SESSION['subjectcontact'],
+            ];
+
+        return $this->twig->render('Home/sendmessage.html.twig', [
+        'send' => $send,
+        ]);
     }
 
     public function signUp()
