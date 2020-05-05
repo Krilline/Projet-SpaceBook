@@ -157,6 +157,16 @@ class HomeController extends AbstractController
             'lastname' => $_SESSION['user_lastname'],
             'pseudo' => $_SESSION['user_pseudo']
         ];
+        // ENVOI DU MAIL
+        $from = "andraurelien@yahoo.fr";
+        $to = $_SESSION['user_email'];
+        $subject = "Welcome to Space Book";
+        $message = "You just created an account using this email address : ". $to;
+        $headers = "From : " . $from;
+        $success = mail($to, $subject, $message, $headers);
+        if (!$success) {
+            error_get_last()['message'];
+        }
         return $this->twig->render('Home/thanks.html.twig', [
             'thanks' => $thanks
         ]);
