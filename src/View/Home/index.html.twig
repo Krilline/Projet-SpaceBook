@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
-{% if not session.login %}
     {% block content %}
+        {% if not session.login %}
         <section class = "bio">
             <div class="text">
                 <h2>Biography</h2>
@@ -22,5 +22,5 @@
                 </div>
             </div>
         </section>
+        {% endif %}
     {% endblock %}
-{% endif %}
