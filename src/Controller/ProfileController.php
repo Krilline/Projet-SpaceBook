@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Model\ProfileManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
+use App\Model\PostManager;
 
 class ProfileController extends AbstractController
 {
@@ -17,7 +18,16 @@ class ProfileController extends AbstractController
             'password' => $_SESSION['password'],
         ];
         $profile = $profileManager->selectUserProfile($profile);
-        return $this->twig->render('Profile/profile.html.twig', ['profile' => $profile]);
+        return $this->twig->render('Profile/profile.html.twig', [
+            'profile' => $profile
+        ]);
+    }
+
+    public function showPosts($id)
+    {
+        $postManager = new PostManager();
+        $posts = $postManager->selectUserPosts($id);
+        return $this->twig->render('Posts/posts.html.twig', ['posts' => $posts]);
     }
 
     public function edit()

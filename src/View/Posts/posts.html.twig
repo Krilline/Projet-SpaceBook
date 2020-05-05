@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h3>Posts</h3>
+    <a href="/post/add">Add a post</a>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-mx-10">
+                {% for post in posts %}
+                    <div class="card-body">
+                        <p class="card-text">Title : {{ post.title }} </p>
+                        <p class="card-text">Content : {{ post.content }} </p>
+                        <p class="card-text">Likes : {{ post.score }}</p>
+                        <a href="/post/edit/{{ item.id }}">Edit</a>
+                        <a href="/post/delete/{{ item.id}}">Delete</a>
+                        <a href="/post/like/{{ item.id}}">Like</a>
+                    </div>
+                {% else %}
+                    <p>No post to display</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
