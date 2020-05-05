@@ -66,16 +66,27 @@ class HomeController extends AbstractController
     public function contact()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $contactManager = new ContactManager();
-            $contact = [
-                'email' => $_POST['email'],
-                'subject' => $_POST['subject'],
-                'message' => $_POST['message'],
-            ];
-            $_SESSION["emailcontact"]=$_POST["email"];
-            $_SESSION["subjectcontact"]=$_POST["subject"];
-            $contactManager->insert($contact);
-            header('Location:/Home/sendMessage');
+            if (!empty($_POST['email']) && !empty($_POST['subject']) && !empty($_POST['message'])) {
+                $contactManager = new ContactManager();
+                $contact = [
+                    'email' => $_POST['email'],
+                    'subject' => $_POST['subject'],
+                    'message' => $_POST['message'],
+                ];
+                $_SESSION["emailcontact"] = $_POST["email"];
+                $_SESSION["subjectcontact"] = $_POST["subject"];
+                $contactManager->insert($contact);
+
+                header('Location:/Home/sendMessage');
+            } else {
+                // MESSAGES D'ERREURS SI FORMULAIRE VIDE
+                $errors = [
+                    'form' => '* Fields are missing *'
+                ];
+                return $this->twig->render('Home/contactform.html.twig', [
+                    'errors' => $errors
+                ]);
+            }
         }
         return $this->twig->render('Home/contactform.html.twig');
     }
@@ -113,7 +124,14 @@ class HomeController extends AbstractController
                     'email' => $_POST['email']
                 ];
                 $profileManager->createUserProfile($profile);
-                header('Location:/');
+
+                // PARTI POUR LE MESSAGE DE REMERCIEMENT APRES INSCRIPTION
+                $_SESSION['user_email'] = $_POST['email'];
+                $_SESSION['user_firstname'] = $_POST['firstname'];
+                $_SESSION['user_lastname'] = $_POST['lastname'];
+                $_SESSION['user_pseudo'] = $_POST['pseudo'];
+
+                header('Location:/Home/thanks');
             } else {
                 $errors = [
                     'form' => '* Fields are missing *'
@@ -128,6 +146,19 @@ class HomeController extends AbstractController
         return $this->twig->render('Home/sign_up.html.twig', [
             'galaxys' => $galaxys,
             'planets' => $planets,
+        ]);
+    }
+
+    public function thanks()
+    {
+        $thanks = [
+            'email' => $_SESSION['user_email'],
+            'firstname' => $_SESSION['user_firstname'],
+            'lastname' => $_SESSION['user_lastname'],
+            'pseudo' => $_SESSION['user_pseudo']
+        ];
+        return $this->twig->render('Home/thanks.html.twig', [
+            'thanks' => $thanks
         ]);
     }
 }
