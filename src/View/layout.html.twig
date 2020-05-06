@@ -16,7 +16,7 @@
 
 <body>
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Spacebook<img class="logo" src="https://cdn3.iconfinder.com/data/icons/glypho-miscellaneous/64/rocket-launch-512.png" alt=""></a>
+    <a class="navbar-brand" href="/Home/index">Spacebook<img class="logo" src="https://cdn3.iconfinder.com/data/icons/glypho-miscellaneous/64/rocket-launch-512.png" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,12 +25,17 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/home/index">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile/index">Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Message</a>
-            </li>
+            {% if session.login %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/index/{{session.id}}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Message</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/logout">Logout</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
