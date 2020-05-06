@@ -19,13 +19,30 @@ class PostManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
-    public function selectUserPosts($user_id): array
+    public function selectUserPosts($userId): array
     {
-        $statement = $this->pdo->prepare("SELECT * FROM " . self::TABLE .
-            " WHERE user_id = :user_id 
+        $statement = $this->pdo->prepare("SELECT post.id, post.title, post.content, post.img, 
+            post.user_id, post.score, user.firstname as user_firstname, user.lastname as user_lastname, 
+            user.pseudo as user_pseudo
+            FROM " . self::TABLE .
+            " JOIN user ON post.user_id = user.id 
+            WHERE user_id = :user_id 
             ORDER BY id DESC");
-        $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
+        $statement->bindValue('user_id', $userId, \PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
+    }
+
+    public function updatePost(array $post): bool
+    {
+        $statement = $this->pdo->prepare("UPDATE " . self::TABLE .
+            " SET `title` = :title, `content` = :content, `img` = :img
+            WHERE id = :id");
+        $statement->bindValue('id', $post['id'], \PDO::PARAM_INT);
+        $statement->bindValue('title', $post['title'], \PDO::PARAM_STR);
+        $statement->bindValue('content', $post['content'], \PDO::PARAM_STR);
+        $statement->bindValue('img', $post['img'], \PDO::PARAM_STR);
+
+        return $statement->execute();
     }
 }
