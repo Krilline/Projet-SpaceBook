@@ -56,12 +56,14 @@ class ProfileController extends AbstractController
             'profile' => $profile
         ]);
     }
-    public function showFriend($id){
+    public function showFriend($id)
+    {
         $friendManager = new FriendManager();
         $profileManager = new ProfileManager();
         $friends = $friendManager->selectFriend($id);
         $result = [];
-        foreach ($friends as $friend){
+
+        foreach ($friends as $friend) {
             $user = $profileManager->selectOneById(intval($friend['friend_id']));
             array_push($result, $user);
         }

@@ -30,9 +30,8 @@ class FriendManager extends AbstractManager
     public function selectFriend($id): array
     {
         $statement = $this->pdo->prepare("SELECT friend_id FROM " . self::TABLE . " WHERE user_id = :id");
-        $statement->bindValue('id' , $id , \PDO::PARAM_INT);
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }
-
 }
