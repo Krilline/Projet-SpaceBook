@@ -28,7 +28,9 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return $this->twig->render('Home/index.html.twig');
+        return $this->twig->render('Home/index.html.twig', [
+            'session' => $_SESSION
+        ]);
     }
 
     public function login()
@@ -42,11 +44,10 @@ class HomeController extends AbstractController
                 ];
                 //FONCTION POUR CHECKER SI LE USER EXISTE
                 $result = $profileManager->checkUserProfile($user);
-                if ($result === true) {
+                if (isset($result['id'])) {
                     $_SESSION['login'] = true;
-                    $_SESSION['email'] = $_POST['email'];
-                    $_SESSION['password'] = $_POST['password'];
-                    header('Location:/profile/index');
+                    $_SESSION['id'] = $result['id'];
+                    header('Location:/Profile/index');
                 } else {
                     //MESSAGE D'ERREUR SI USER NON EXISTANT
                     $error['wrong_login'] = 'Email or Password incorrect !';
@@ -183,6 +184,7 @@ class HomeController extends AbstractController
         return $this->twig->render('Home/sign_up.html.twig', [
             'galaxys' => $galaxys,
             'planets' => $planets,
+            'session' => $_SESSION
         ]);
     }
 
@@ -232,5 +234,13 @@ class HomeController extends AbstractController
         return $this->twig->render('Home/thanks.html.twig', [
             'thanks' => $thanks
         ]);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['id']);
+        session_destroy();
+        header('Location:/Home/index');
     }
 }
