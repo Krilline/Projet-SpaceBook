@@ -26,5 +26,4 @@ class PostController extends AbstractController
         }
         return $this->twig->render('Posts/editpost.html.twig', ['post' => $post]);
     }
-
 }
