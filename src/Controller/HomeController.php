@@ -119,7 +119,7 @@ class HomeController extends AbstractController
         $mail->addAddress($_SESSION['emailcontact']);
         $mail->addEmbeddedImage('../public/assets/images/catworking.gif', "working", "catworking.gif");
         $mail->Subject = "Contact Us";
-        $mail->Body = "<h1>You demand is under review</h1><br>
+        $mail->Body = "<h1>Your demand is under review</h1><br>
         <img src='cid:working' alt='working'>
         <p>You sent us a message using this email : ". $_SESSION['emailcontact'] ."</p>
         <p>The subject of your message is : ".$_SESSION['subjectcontact'] ."</p>
