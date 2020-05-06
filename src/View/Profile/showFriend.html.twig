@@ -1,0 +1,8 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+{% for results in result %}
+    <img src="{{ results.avatar }}" class="img-profile" alt="avatar">
+    <h1 class="name-profile">{{ results.firstname }}</h1>
+    {% endfor %}
+{% endblock %}
