@@ -25,7 +25,7 @@ class ProfileManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
-    public function selectUserProfile($user): array
+    public function selectUserProfile($id): array
     {
         $statement= $this->pdo->prepare(" SELECT user.id, firstname, lastname, pseudo,
   date_of_birth, planet_name, planet_id, galaxy_id, galaxy_name, password, 
@@ -33,23 +33,22 @@ class ProfileManager extends AbstractManager
         JOIN role ON role.id=user.role_id 
         JOIN planet ON planet.id=user.planet_id 
         JOIN galaxy on galaxy.id=planet.galaxy_id WHERE
-        email = :email AND password = :password");
+        user.id = :id");
 
-        $statement->bindValue('email', $user['email'], \PDO::PARAM_STR);
-        $statement->bindValue('password', $user['password'], \PDO::PARAM_STR);
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
 
         $statement->execute();
         return $statement->fetch();
     }
 
-    public function updateProfile(array $profile): bool
+    public function updateProfile($profile): bool
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE .
             " SET `firstname` = :firstname, `lastname` = :lastname, `pseudo` = :pseudo, 
             `date_of_birth` = :date_of_birth, 
             `email` = :email, `planet_id` = :planet_id, `password` = :password,
             `avatar` = :avatar, `description` = :description
-            WHERE email = :useremail AND password = :userpassword");
+            WHERE id = :id");
         $statement->bindValue('firstname', $profile['firstname'], \PDO::PARAM_STR);
         $statement->bindValue('lastname', $profile['lastname'], \PDO::PARAM_STR);
         $statement->bindValue('pseudo', $profile['pseudo'], \PDO::PARAM_STR);
@@ -59,8 +58,7 @@ class ProfileManager extends AbstractManager
         $statement->bindValue('password', $profile['password'], \PDO::PARAM_STR);
         $statement->bindValue('avatar', $profile['avatar'], \PDO::PARAM_STR);
         $statement->bindValue('description', $profile['description'], \PDO::PARAM_STR);
-        $statement->bindValue('useremail', $profile['useremail'], \PDO::PARAM_STR);
-        $statement->bindValue('userpassword', $profile['userpassword'], \PDO::PARAM_STR);
+        $statement->bindValue('id', $profile['id'], \PDO::PARAM_INT);
 
         return $statement->execute();
     }
@@ -86,9 +84,16 @@ class ProfileManager extends AbstractManager
         }
     }
 
+    public function deleteUserProfile($id)
+    {
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id = :id");
+        $statement->bindValue('id', intval($id), \PDO::PARAM_INT);
+        $statement->execute();
+    }
+
     public function checkUserProfile($user)
     {
-        $statement = $this->pdo->prepare("SELECT email, password FROM 
+        $statement = $this->pdo->prepare("SELECT * FROM 
         " . self::TABLE . " WHERE email = :email");
 
         $statement->bindvalue('email', $user['email'], \PDO::PARAM_STR);
@@ -98,7 +103,7 @@ class ProfileManager extends AbstractManager
                 return false;// UTILISATEUR INCONNU
             } else {
                 if ($result['password'] === $user['password']) {
-                    return true;
+                    return $result;
                 } else {
                     return false; //MOT DE PASSE MAUVAIS
                 }
