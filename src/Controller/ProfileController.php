@@ -58,4 +58,11 @@ class ProfileController extends AbstractController
             ]);
         }
     }
+
+    public function delete($id)
+    {
+        $profileManager = new ProfileManager();
+        $profileManager->deleteUserProfile($id);
+        header("Location: /home/index");
+    }
 }
