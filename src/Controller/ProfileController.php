@@ -55,7 +55,8 @@ class ProfileController extends AbstractController
             return $this->twig->render('Profile/edit.html.twig', [
                 'galaxys' => $galaxys,
                 'planets' => $planets,
-                'profile' => $profile
+                'profile' => $profile,
+                'session' => $_SESSION
             ]);
         }
     }
@@ -64,6 +65,9 @@ class ProfileController extends AbstractController
     {
         $profileManager = new ProfileManager();
         $profileManager->deleteUserProfile($id);
+        unset($_SESSION['login']);
+        unset($_SESSION['id']);
+        session_destroy();
         header("Location: /home/index");
     }
 
