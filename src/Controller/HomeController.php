@@ -12,6 +12,8 @@ use App\Model\ContactManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
 use App\Model\ProfileManager;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class HomeController extends AbstractController
 {
@@ -67,16 +69,27 @@ class HomeController extends AbstractController
     public function contact()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $contactManager = new ContactManager();
-            $contact = [
-                'email' => $_POST['email'],
-                'subject' => $_POST['subject'],
-                'message' => $_POST['message'],
-            ];
-            $_SESSION["emailcontact"]=$_POST["email"];
-            $_SESSION["subjectcontact"]=$_POST["subject"];
-            $contactManager->insert($contact);
-            header('Location:/Home/sendMessage');
+            if (!empty($_POST['email']) && !empty($_POST['subject']) && !empty($_POST['message'])) {
+                $contactManager = new ContactManager();
+                $contact = [
+                    'email' => $_POST['email'],
+                    'subject' => $_POST['subject'],
+                    'message' => $_POST['message'],
+                ];
+                $_SESSION["emailcontact"] = $_POST["email"];
+                $_SESSION["subjectcontact"] = $_POST["subject"];
+                $contactManager->insert($contact);
+
+                header('Location:/Home/sendMessage');
+            } else {
+                // MESSAGES D'ERREURS SI FORMULAIRE VIDE
+                $errors = [
+                    'form' => '* Fields are missing *'
+                ];
+                return $this->twig->render('Home/contactform.html.twig', [
+                    'errors' => $errors
+                ]);
+            }
         }
         return $this->twig->render('Home/contactform.html.twig');
     }
@@ -87,6 +100,41 @@ class HomeController extends AbstractController
             'email' => $_SESSION['emailcontact'],
             'subject' => $_SESSION['subjectcontact'],
             ];
+        // ENVOI DU MAIL
+        $mail = new PHPMailer();
+
+        //SMTP Settings
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPAuth = true;
+        $mail->Username = "paulfromendor@gmail.com";
+        $mail->Password = '1a2;@phi.d';
+        $mail->Port = 465; //587
+        $mail->SMTPSecure = "ssl"; //tls
+
+        //Email Settings
+        $mail->CharSet = "UTF-8";
+        $mail->isHTML(true);
+        $mail->setFrom("paulfromendor@gmail.com", "Paul the Admin");
+        $mail->addAddress($_SESSION['emailcontact']);
+        $mail->addEmbeddedImage('../public/assets/images/catworking.gif', "working", "catworking.gif");
+        $mail->Subject = "Contact Us";
+        $mail->Body = "<h1>Your demand is under review</h1><br>
+        <img src='cid:working' alt='working'>
+        <p>You sent us a message using this email : ". $_SESSION['emailcontact'] ."</p>
+        <p>The subject of your message is : ".$_SESSION['subjectcontact'] ."</p>
+        <p>A member of our team is looking at it and will contact you soon</p>
+        <p><small>The Space Book Team</small></p>";
+
+        if ($mail->send()) {
+            $status = "success";
+            $response = "Email is sent!";
+            //echo $response;
+        } else {
+            $status = "failed";
+            $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+            //echo $response;
+        }
 
         return $this->twig->render('Home/sendmessage.html.twig', [
         'send' => $send,
@@ -114,7 +162,14 @@ class HomeController extends AbstractController
                     'email' => $_POST['email']
                 ];
                 $profileManager->createUserProfile($profile);
-                header('Location:/');
+
+                // PARTI POUR LE MESSAGE DE REMERCIEMENT APRES INSCRIPTION
+                $_SESSION['user_email'] = $_POST['email'];
+                $_SESSION['user_firstname'] = $_POST['firstname'];
+                $_SESSION['user_lastname'] = $_POST['lastname'];
+                $_SESSION['user_pseudo'] = $_POST['pseudo'];
+
+                header('Location:/Home/thanks');
             } else {
                 $errors = [
                     'form' => '* Fields are missing *'
@@ -130,6 +185,54 @@ class HomeController extends AbstractController
             'galaxys' => $galaxys,
             'planets' => $planets,
             'session' => $_SESSION
+        ]);
+    }
+
+    public function thanks()
+    {
+        $thanks = [
+            'email' => $_SESSION['user_email'],
+            'firstname' => $_SESSION['user_firstname'],
+            'lastname' => $_SESSION['user_lastname'],
+            'pseudo' => $_SESSION['user_pseudo']
+        ];
+        // ENVOI DU MAIL
+        $mail = new PHPMailer();
+
+        //SMTP Settings
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPAuth = true;
+        $mail->Username = "paulfromendor@gmail.com";
+        $mail->Password = '1a2;@phi.d';
+        $mail->Port = 465; //587
+        $mail->SMTPSecure = "ssl"; //tls
+
+        //Email Settings
+        $mail->CharSet = "UTF-8";
+        $mail->isHTML(true);
+        $mail->setFrom("paulfromendor@gmail.com", "Paul the Admin");
+        $mail->addAddress($_SESSION['user_email']);
+        $mail->addEmbeddedImage('../public/assets/images/grgroup190627977.jpg', "logo", "grgroup190627977.jpg");
+        $mail->Subject = "Welcome to Space Book";
+        $mail->Body = "<h1>You created an account !</h1><br>
+        <img src='cid:logo' alt='logo'>
+        <p>Your pseudo is : ". $_SESSION['user_pseudo'] ."</p>
+        <p>Your firstname and lastname are : ". $_SESSION['user_firstname'] ." ". $_SESSION['user_lastname'] ."</p>
+        <p>Your mail adress is : ". $_SESSION['user_email'] ."</p>
+        <p><small>The Space Book Team</small></p>";
+
+        if ($mail->send()) {
+            $status = "success";
+            $response = "Email is sent!";
+            //echo $response;
+        } else {
+            $status = "failed";
+            $response = "Something is wrong: <br><br>" . $mail->ErrorInfo;
+            //echo $response;
+        }
+        return $this->twig->render('Home/thanks.html.twig', [
+            'thanks' => $thanks
         ]);
     }
 
