@@ -55,7 +55,8 @@ class ProfileController extends AbstractController
             return $this->twig->render('Profile/edit.html.twig', [
                 'galaxys' => $galaxys,
                 'planets' => $planets,
-                'profile' => $profile
+                'profile' => $profile,
+                'session' => $_SESSION
             ]);
         }
     }
@@ -79,6 +80,6 @@ class ProfileController extends AbstractController
             array_push($result, $user);
         }
         //var_dump($result);
-        return $this->twig->render('Profile/showFriend.html.twig', [ 'result'=> $result ]);
+        return $this->twig->render('Profile/showFriend.html.twig', [ 'result'=> $result, 'session' => $_SESSION ]);
     }
 }
