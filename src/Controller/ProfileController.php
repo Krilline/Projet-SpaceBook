@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Model\ProfileManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
+use App\Model\FriendManager;
 
 class ProfileController extends AbstractController
 {
@@ -64,5 +65,20 @@ class ProfileController extends AbstractController
         $profileManager = new ProfileManager();
         $profileManager->deleteUserProfile($id);
         header("Location: /home/index");
+    }
+
+    public function showFriend($id)
+    {
+        $friendManager = new FriendManager();
+        $profileManager = new ProfileManager();
+        $friends = $friendManager->selectFriend($id);
+        $result = [];
+
+        foreach ($friends as $friend) {
+            $user = $profileManager->selectOneById(intval($friend['friend_id']));
+            array_push($result, $user);
+        }
+        //var_dump($result);
+        return $this->twig->render('Profile/showFriend.html.twig', [ 'result'=> $result ]);
     }
 }

@@ -83,6 +83,7 @@ footer .nav-link{
     border-radius: 150px;
     width:300px;
     height:300px;
+    box-shadow: 1px 1px 12px #555;
 }
 
 .button{
@@ -109,9 +110,73 @@ footer .nav-link{
     color: #313133;
     transform: translateY(-6px);
 }
+.card-body{
+    font-family: 'Press Start 2P', cursive;
+}
+
+.img-profile {
+
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius: 150px;
+    width:300px;
+    height:300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 1px 1px 12px #555;
+}
+
+.name-profile {
+    font-family: 'Press Start 2P', cursive;
+    background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#045FB4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: 20px;
+}
+
+
+.btn-friend {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FF504A), to(#FF8956));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.btn-edit {
+    font-family: 'Press Start 2P', cursive;
+    padding: 5px;
+    background: linear-gradient(#FF504A, #FF8956);
+    margin-top: 10%;
+    font-size: 15px;
+    margin-left: 30%;
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px
+    rgba(79,209,197,.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-delete {
+    font-family: 'Press Start 2P', cursive;
+    padding: 5px;
+    background: linear-gradient(#FF504A, #FF8956);
+    margin-top: 10%;
+    font-size: 15px;
+    margin-left: 5%;
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px
+    rgba(79,209,197,.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+}
 
 .thanks {
     color: #262278;
 }
+
 
 
