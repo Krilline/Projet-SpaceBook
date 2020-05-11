@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\PostManager;
+use App\Model\CommentManager;
 
 class PostController extends AbstractController
 {
@@ -25,5 +26,13 @@ class PostController extends AbstractController
             header("Location:/profile/index");
         }
         return $this->twig->render('Posts/editpost.html.twig', ['post' => $post]);
+    }
+
+    public function showComments($id)
+    {
+        $commentManager = new CommentManager();
+        $comments = $commentManager->selectComments($id);
+        //var_dump($comments); die;
+        return $this->twig->render('Posts/comments.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
     }
 }
