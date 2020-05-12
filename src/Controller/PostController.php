@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\PostManager;
+use App\Model\ProfileManager;
 use App\Model\CommentManager;
 
 class PostController extends AbstractController
@@ -18,21 +19,46 @@ class PostController extends AbstractController
     {
         $postManager = new PostManager();
         $post = $postManager->selectOneById($id);
+        $userId = $_SESSION['id'];
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $post['title'] = $_POST['title'];
             $post['content'] = $_POST['content'];
             $post['img'] = $_POST['img'];
             $postManager->updatePost($post);
-            header("Location:/profile/index");
+            header('Location:/post/showPosts/' . $userId);
         }
         return $this->twig->render('Posts/editpost.html.twig', ['post' => $post, 'session' => $_SESSION]);
     }
+
+    public function addPost()
+    {
+        $userId = $_SESSION['id'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $postManager = new PostManager();
+            $post = [
+                'title' => $_POST['title'],
+                'content' => $_POST['content'],
+                'img' => $_POST['img'],
+                'user_id' => $userId,
+                'score' => 0
+            ];
+            $postManager->insert($post);
+            header('Location:/post/showPosts/' . $userId);
+        }
+        return $this->twig->render('Posts/addPost.html.twig', ['session' => $_SESSION]);
+    }
+
+    public function deletePost(int $id)
+    {
+        $userId = $_SESSION['id'];
+        $postManager = new PostManager();
+        $postManager->delete($id);
+        header('Location:/post/showPosts/' . $userId);
 
     public function showComments($id)
     {
         $commentManager = new CommentManager();
         $comments = $commentManager->selectComments($id);
-        //var_dump($comments); die;
         return $this->twig->render('Posts/comments.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
     }
 }
