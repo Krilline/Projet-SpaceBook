@@ -8,9 +8,11 @@
             <div class="col-mx-10">
                 {% for post in posts %}
                     <div class="card-body">
+                        {% if {{ post.img }} %}
                         <div class="col-md-8">
                             <img src="{{ post.img }}" class="card-img" alt="picture">
                         </div>
+                        {% endif %}
                         <p class="card-text">Title : {{ post.title }} </p>
                         <p class="card-text">Content : {{ post.content }} </p>
                         <p class="card-text">Likes : {{ post.score }}</p>
