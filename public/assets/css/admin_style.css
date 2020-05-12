@@ -12,6 +12,10 @@ body{
     padding-top: 30px;
 }
 
+img {
+    max-width: 18rem;
+}
+
 ul li{
     font-size: 1.8em;
     padding: 15px;

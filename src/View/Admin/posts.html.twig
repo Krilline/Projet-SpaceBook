@@ -6,7 +6,7 @@
         <div class="row">
             {% for post in posts %}
                 <div class="card col-12 mt-3 mr-2 text-white bg-dark mb-3">
-                    <div class="card-header">ID: {{ post.id }} From: {{ post.user_id }}</div>
+                    <div class="card-header">ID: {{ post.id }} From User_id: {{ post.user_id }}</div>
                     <div class="card-body">
                         {% if post.img %}
                             <img class="card-img-top" src="{{ post.img }}" alt="post image">
@@ -15,6 +15,8 @@
                         <p class="card-text">Content: {{ post.content }}</p>
                         <p class="card-text">Score: {{ post.score }}</p>
                         <a href="/Admin/deletePost/{{ post.id }}" class="btn btn-primary">Delete</a>
+                        <a href="/Admin/comments/{{ post.id }}" class="btn btn-primary">Comments</a>
+                        <a href="/Admin/modifyPost/{{ post.id }}" class="btn btn-primary">Modify</a>
                     </div>
                 </div>
             {% endfor %}
