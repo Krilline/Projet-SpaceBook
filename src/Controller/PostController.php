@@ -11,7 +11,7 @@ class PostController extends AbstractController
     {
         $postManager = new PostManager();
         $posts = $postManager->selectUserPosts($id);
-        return $this->twig->render('Posts/posts.html.twig', ['posts' => $posts]);
+        return $this->twig->render('Posts/posts.html.twig', ['posts' => $posts, 'session' => $_SESSION]);
     }
 
     public function editPost($id)
@@ -25,7 +25,7 @@ class PostController extends AbstractController
             $postManager->updatePost($post);
             header("Location:/profile/index");
         }
-        return $this->twig->render('Posts/editpost.html.twig', ['post' => $post]);
+        return $this->twig->render('Posts/editpost.html.twig', ['post' => $post, 'session' => $_SESSION]);
     }
 
     public function showComments($id)

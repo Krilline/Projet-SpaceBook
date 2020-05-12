@@ -4,5 +4,6 @@
 {% for results in result %}
     <img src="{{ results.avatar }}" class="img-profile" alt="avatar">
     <h1 class="name-profile">{{ results.firstname }}</h1>
+    <a href="/profile/deleteFriend/{{ results.id }}" class="btn-delete" role="button" aria-pressed="true">Delete Friend</a>
     {% endfor %}
 {% endblock %}
