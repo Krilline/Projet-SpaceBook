@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\PostManager;
 use App\Model\ProfileManager;
+use App\Model\CommentManager;
 
 class PostController extends AbstractController
 {
@@ -53,5 +54,11 @@ class PostController extends AbstractController
         $postManager = new PostManager();
         $postManager->delete($id);
         header('Location:/post/showPosts/' . $userId);
+
+    public function showComments($id)
+    {
+        $commentManager = new CommentManager();
+        $comments = $commentManager->selectComments($id);
+        return $this->twig->render('Posts/comments.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
     }
 }

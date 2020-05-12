@@ -68,6 +68,13 @@ class ProfileController extends AbstractController
         header("Location: /home/index");
     }
 
+    public function deleteFriend($id)
+    {
+        $friendManager = new FriendManager();
+        $friendManager->deleteFriends($id);
+        header("Location: /profile/index");
+    }
+
     public function showFriend($id)
     {
         $friendManager = new FriendManager();
@@ -79,7 +86,24 @@ class ProfileController extends AbstractController
             $user = $profileManager->selectOneById(intval($friend['friend_id']));
             array_push($result, $user);
         }
-        //var_dump($result);
         return $this->twig->render('Profile/showFriend.html.twig', [ 'result'=> $result, 'session' => $_SESSION ]);
+    }
+
+    public function allUser(){
+        $profileManager = new ProfileManager();
+        $users = $profileManager->selectAllFriends();
+        return $this->twig->render('Profile/allUser.html.twig', ['users' => $users, 'session' => $_SESSION]);
+    }
+
+    public function profileUser($id){
+        $profileManager = new ProfileManager();
+        $user = $profileManager->selectUserProfile($id);
+        return $this->twig->render('Profile/profileUser.html.twig', ['user' => $user, 'session' => $_SESSION]);
+    }
+
+    public function addFriend($id){
+        $friendManager = new FriendManager();
+        $addFriend = $friendManager->addFriend($id);
+        header( 'Location: /profile/showFriend/'.$_SESSION['id']);
     }
 }
