@@ -86,7 +86,17 @@ class ProfileManager extends AbstractManager
 
     public function deleteUserProfile($id)
     {
-        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id = :id");
+        $statement = $this->pdo->prepare("DELETE post, comment, friend, conversation 
+        FROM " .self::TABLE. " 
+        LEFT JOIN post ON post.user_id = user.id
+        LEFT JOIN comment ON comment.user_id = user.id
+        LEFT JOIN friend ON friend.user_id AND friend.friend_id = user.id
+        LEFT JOIN conversation ON conversation.send_id = user.id
+        WHERE user.id = :id");
+        $statement->bindValue('id', intval($id), \PDO::PARAM_INT);
+        $statement->execute();
+
+        $statement = $this->pdo->prepare("DELETE FROM " .self::TABLE. " WHERE id = :id");
         $statement->bindValue('id', intval($id), \PDO::PARAM_INT);
         $statement->execute();
     }

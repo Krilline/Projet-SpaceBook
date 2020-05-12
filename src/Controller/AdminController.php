@@ -20,30 +20,76 @@ class AdminController extends AbstractController
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
+    public function login()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!empty($_POST['username']) && !empty($_POST['password'])) {
+                if ($_POST['username'] == 'PaulTheAdmin' && $_POST['password'] == 007) {
+                    $_SESSION['admin'] = true;
+                    header('Location: /Admin/index');
+                }
+            }
+        }
+        return $this->twig->render('Admin/login.html.twig');
+    }
+
     public function index()
     {
-        return $this->twig->render('Admin/index.html.twig');
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            return $this->twig->render('Admin/index.html.twig');
+        }
     }
 
     public function posts()
     {
-        $postManager = new PostManager();
-        $posts = $postManager->selectAll();
-        return $this->twig->render('Admin/posts.html.twig', ['posts' => $posts]);
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            $postManager = new PostManager();
+            $posts = $postManager->selectAll();
+            return $this->twig->render('Admin/posts.html.twig', ['posts' => $posts]);
+        }
     }
 
     public function users()
     {
-        $profileManager = new ProfileManager();
-        $profiles = $profileManager->selectAll();
-        return $this->twig->render('Admin/users.html.twig', ['profiles' => $profiles]);
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            $profileManager = new ProfileManager();
+            $profiles = $profileManager->selectAll();
+            return $this->twig->render('Admin/users.html.twig', ['profiles' => $profiles]);
+        }
     }
 
     public function support()
     {
-        $contactManager = new ContactManager();
-        $messages = $contactManager->selectAll();
-        return $this->twig->render('Admin/support.html.twig', ['messages' => $messages]);
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            $contactManager = new ContactManager();
+            $messages = $contactManager->selectAll();
+            return $this->twig->render('Admin/support.html.twig', ['messages' => $messages]);
+        }
+    }
+
+    public function userProfile($id)
+    {
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            $profileManager = new ProfileManager();
+            $profile = $profileManager->selectUserProfile($id);
+
+            $postManager = new PostManager();
+            $posts = $postManager->selectUserPosts($id);
+            return $this->twig->render('Admin/user_profile.html.twig', [
+                'profile' => $profile,
+                'posts' => $posts,
+            ]);
+        }
     }
 
     public function deleteMessage($id)
@@ -67,33 +113,10 @@ class AdminController extends AbstractController
         header("Location: /Admin/users");
     }
 
-    public function modifyUser($id)
+    public function logout()
     {
-        $profileManager = new ProfileManager();
-        $profile = $profileManager->selectUserProfile($id);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $profile['firstname'] = $_POST['firstname'];
-            $profile['lastname'] = $_POST['lastname'];
-            $profile['pseudo'] = $_POST['pseudo'];
-            $profile['date_of_birth'] = $_POST['date_of_birth'];
-            $profile['planet_id'] = $_POST['planet_id'];
-            $profile['password'] = $_POST['password'];
-            $profile['email'] = $_POST['email'];
-            $profile['avatar'] = $_POST['avatar'];
-            $profile['description'] = $_POST['description'];
-            $profile['id'] = $id;
-            $profileManager->updateProfile($profile);
-            header("Location:/Admin/users");
-        }
-        $galaxyManager = new GalaxyManager();
-        $galaxys = $galaxyManager->selectUserGalaxy();
-        $planetManager = new PlanetManager();
-        $planets = $planetManager->selectUserPlanet();
-        return $this->twig->render('Admin/modify.html.twig', [
-            'galaxys' => $galaxys,
-            'planets' => $planets,
-            'profile' => $profile
-        ]);
+        unset($_SESSION['admin']);
+        session_destroy();
+        header('Location:/Home/index');
     }
 }
