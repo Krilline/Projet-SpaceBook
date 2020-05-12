@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Model\CommentManager;
 use App\Model\ContactManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
@@ -75,6 +76,17 @@ class AdminController extends AbstractController
         }
     }
 
+    public function comments($id)
+    {
+        if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
+            Header('Location:/Home/index');
+        } else {
+            $commentManager = new CommentManager();
+            $comments = $commentManager->selectComments($id);
+            return $this->twig->render('Admin/comments.html.twig', ['comments' => $comments]);
+        }
+    }
+
     public function userProfile($id)
     {
         if (empty($_SESSION['admin']) || $_SESSION['admin'] == false) {
@@ -102,7 +114,7 @@ class AdminController extends AbstractController
     public function deletePost($id)
     {
         $postManager = new PostManager();
-        $postManager->deletePostById($id);
+        $postManager->delete($id);
         header("Location: /Admin/posts");
     }
 
@@ -111,6 +123,13 @@ class AdminController extends AbstractController
         $profileManager = new ProfileManager();
         $profileManager->deleteUserProfile($id);
         header("Location: /Admin/users");
+    }
+
+    public function deleteComment($id)
+    {
+        $commentManager = new CommentManager();
+        $commentManager->delete($id);
+        header("Location: /Admin/posts");
     }
 
     public function logout()

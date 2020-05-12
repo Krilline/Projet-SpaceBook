@@ -15,7 +15,7 @@
                         <p class="card-text">Content: {{ post.content }}</p>
                         <p class="card-text">Score: {{ post.score }}</p>
                         <a href="/Admin/deletePost/{{ post.id }}" class="btn btn-primary">Delete</a>
-                        <!-- TODO ADD A LINK TO COMMENT SECTION TO DELETE -->
+                        <a href="/Admin/comments/{{ post.id }}" class="btn btn-primary">Comments</a>
                     </div>
                 </div>
             {% endfor %}

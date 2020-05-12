@@ -46,7 +46,22 @@ class PostManager extends AbstractManager
         return $statement->execute();
     }
 
-    public function deletePostById(int $id): void
+    public function insert(array $post): int
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE .
+            " (`title`, `content`, `img`, `user_id`, `score`) VALUES (:title, :content, :img, :user_id, :score)");
+        $statement->bindValue('title', $post['title'], \PDO::PARAM_STR);
+        $statement->bindValue('content', $post['content'], \PDO::PARAM_STR);
+        $statement->bindValue('img', $post['img'], \PDO::PARAM_STR);
+        $statement->bindValue('user_id', $post['user_id'], \PDO::PARAM_INT);
+        $statement->bindValue('score', 0, \PDO::PARAM_INT);
+        if ($statement->execute()) {
+            return (int)$this->pdo->lastInsertId();
+        }
+    }
+
+    public function delete($id): void
     {
         // prepared request
         $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id=:id");
