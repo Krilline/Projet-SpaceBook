@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h3>Your Post</h3>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-mx-10">
+                    <div class="card-body">
+                        <div class="col-md-8">
+                            <img src="{{ comments.post_img }}" class="card-img" alt="picture">
+                        </div>
+                        <p class="card-text">Title : {{ comments[0].post_title }} </p>
+                        <p class="card-text">Content : {{ comments[0].post_content }} </p>
+                        <p class="card-text">Likes : {{ comments[0].post_score }}</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <h3>Comments</h3>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-mx-10">
+                {% for comment in comments %}
+                    <div class="card-body">
+                        <p class="card-text">Comment #{{ comment.id }} </p>
+                        <p class="card-text">User Name: {{ comment.user_firstname }} {{ comment.user_lastname }}</p>
+                        <p class="card-text">Date: {{ comment.current_date }} </p>
+                        <p class="card-text">Content : {{ comment.content }} </p>
+                    </div>
+                {% else %}
+                    <p>No comment to display</p>
+                {% endfor %}
+                <a href="/post/showPosts/{{ comments[0].user_id }}">Back to Posts</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

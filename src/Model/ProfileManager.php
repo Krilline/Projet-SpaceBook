@@ -41,6 +41,14 @@ class ProfileManager extends AbstractManager
         return $statement->fetch();
     }
 
+    public function selectAllFriends(): array
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM ' . self::TABLE . ' WHERE id <> :id');
+        $statement->bindValue('id', $_SESSION['id'], \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
     public function updateProfile($profile): bool
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE .
