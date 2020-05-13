@@ -243,7 +243,7 @@ footer .nav-link{
     outline: none;
 }
 
-.row, .no-gutters{
+ .no-gutters{
     background: linear-gradient(#FF504A, #FF8956);
 }
 .card-img{
