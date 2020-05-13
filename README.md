@@ -1,34 +1,76 @@
-## Steps
+# Space Book Project
 
-1. Clone the repo from Github.
-2. Run `composer install`.
-3. Create *config/db.php* from *config/db.php.dist* file and add your DB parameters. Don't delete the *.dist* file, it must be kept.
-```php
-define('APP_DB_HOST', 'your_db_host');
-define('APP_DB_NAME', 'your_db_name');
-define('APP_DB_USER', 'your_db_user_wich_is_not_root');
-define('APP_DB_PWD', 'your_db_password');
-```
-4. Import `simple-mvc.sql` in your SQL server,
-5. Run the internal PHP webserver with `php -S localhost:8000 -t public/`. The option `-t` with `public` as parameter means your localhost will target the `/public` folder.
-6. Go to `localhost:8000` with your favorite browser.
-7. From this starter kit, create your own web application.
+##### Inter-galactic social network.
 
-### Windows Users
+## The Team
 
-If you develop on Windows, you should edit you git configuration to change your end of line rules with this command :
+* Anne Lozier | [Github](https://github.com/aloz-lab)
+* Jules Dumas | [Github](https://github.com/juliusDum)
+* Guillaume Del Vecchio | [Github](https://github.com/GuillaumeDV)
+* Jimmy Boucaud | [Github](https://github.com/Jimbeck2403)
+* Aurélien André | [Github](https://github.com/Krilline)
 
-`git config --global core.autocrlf true`
+## Technos
 
-## URLs availables
+* HTML
+* CSS
+* PHP
+* Twig
 
-* Home page at [localhost:8000/](localhost:8000/)
-* Items list at [localhost:8000/item/index](localhost:8000/item/index)
-* Item details [localhost:8000/item/index/show/:id](localhost:8000/item/show/2)
-* Item edit [localhost:8000/item/index/edit/:id](localhost:8000/item/edit/2)
-* Item add [localhost:8000/item/index/add](localhost:8000/item/add)
-* Item deletion [localhost:8000/item/index/delete/:id](localhost:8000/item/delete/2)
+## Functionalities 
 
-## How does URL routing work ?
+* Nav-bar(Logged out)
+    * Website Title
+    * Home link
+* Nav-bar(Logged)
+    * Website Title
+    * Home link
+    * Profile link
+    * Message link
+    * Add User link
+    * Logout
+* Home Page(Logged out)
+    * Website's Biography
+    * Website's Resume
+    * Sign up button
+    * Login button
+* Home Page(Logged)
+    * Friends posts
+        * Like post
+        * Comments post
+* Profile Page
+    * User informations
+        * Edit profile
+        * Delete profile
+    * Show posts button
+        * Add post
+        * Edit post
+        * Delete post
+    * See friends button
+        * Delete friend
+* Message Page
+    * Users messages
+        * Add message
+* Add User Page
+    * Add user as friend
+* Footer
+    * Contact Us
+        * Send support message
+    * Copyrights
+        * Secret links to admin panel
+            * Delete users
+            * Delete posts
+                * Delete comments
+            * Manage support tickets
+## Graphic Chart
 
-![Simple MVC.png](https://raw.githubusercontent.com/WildCodeSchool/simple-mvc/master/Simple%20-%20MVC.png)
+![graphicChart](public/assets/images/GraphicChart.png)
+
+## Mobile WireFrame
+
+![mobile](public/assets/images/Mobile.png)
+
+## Desktop WireFrame
+
+![desktoplogout](public/assets/images/DesktopLogout.png)
+![desktoplogged](public/assets/images/DesktopLogged.png)
