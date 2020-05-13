@@ -4,9 +4,11 @@
     <h2>Edit post {{ post.title }} </h2>
     <form method="post">
         <input type="hidden" value="{{ post.id }}" name="id">
-            <div class="col-md-2">
+        {% if post.img %}
+            <div class="col-md-3">
                 <img src="{{ post.img }}" class="card-img" alt="picture">
             </div>
+        {% endif %}
             <div class="form-group col-md-6">
                 <label for="img">Image</label>
                 <input type="text" class="form-control" id="avatar" value="{{ post.img }}" name="img">
