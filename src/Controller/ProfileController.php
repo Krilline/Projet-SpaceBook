@@ -106,6 +106,13 @@ class ProfileController extends AbstractController
         return $this->twig->render('Profile/profileUser.html.twig', ['user' => $user, 'session' => $_SESSION]);
     }
 
+    public function profileFriend($id)
+    {
+        $profileManager = new ProfileManager();
+        $friends = $profileManager->selectUserProfile($id);
+        return $this->twig->render('Profile/profileFriend.html.twig', ['friends' => $friends, 'session' => $_SESSION]);
+    }
+
     public function addFriend($id)
     {
         $friendManager = new FriendManager();
