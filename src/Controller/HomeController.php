@@ -9,8 +9,10 @@
 namespace App\Controller;
 
 use App\Model\ContactManager;
+use App\Model\FriendManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
+use App\Model\PostManager;
 use App\Model\ProfileManager;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -28,9 +30,25 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return $this->twig->render('Home/index.html.twig', [
-            'session' => $_SESSION
-        ]);
+        if (empty($_SESSION['login']) || $_SESSION['login'] == false) {
+            return $this->twig->render('Home/index.html.twig', [
+                'session' => $_SESSION
+            ]);
+        } else {
+            $friendManager = new FriendManager();
+            $postManager = new PostManager();
+            $friends = $friendManager->selectFriend($_SESSION['id']);
+            $post = [];
+
+            foreach ($friends as $friend) {
+                $user = $postManager->selectUserPosts(intval($friend['friend_id']));
+                array_push($post, $user);
+            }
+            return $this->twig->render('Home/index.html.twig', [
+                'session' => $_SESSION,
+                'post' => $post
+            ]);
+        }
     }
 
     public function login()
