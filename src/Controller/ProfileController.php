@@ -7,6 +7,7 @@ use App\Model\ProfileManager;
 use App\Model\GalaxyManager;
 use App\Model\PlanetManager;
 use App\Model\FriendManager;
+use App\Model\MessageManager;
 
 class ProfileController extends AbstractController
 {
@@ -118,5 +119,23 @@ class ProfileController extends AbstractController
         $friendManager = new FriendManager();
         $friendManager->addFriend($id);
         header('Location: /profile/showFriend/'.$_SESSION['id']);
+    }
+    public function chat()
+    {
+        $date = date('Y/m/d G:i:s');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $messageManager = new MessageManager();
+            $message = [
+                'content' => $_POST['content'],
+                'date' => $date,
+                'pseudo' => $_POST['pseudo'],
+
+            ];
+            $messageManager->insertMessage($message);
+            header("Location: /Profile/chat");
+        }
+        $messageManager = new MessageManager();
+        $messages = $messageManager->showMessage();
+        return $this->twig->render('Profile/chat.html.twig', ['messages' => $messages, 'session' => $_SESSION]);
     }
 }
