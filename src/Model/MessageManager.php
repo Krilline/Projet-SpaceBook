@@ -7,7 +7,7 @@ class MessageManager extends AbstractManager
 {
 
 
-    const TABLE = 'message';
+    const TABLE = 'chat';
 
     /**
      *  Initializes this class.
@@ -16,17 +16,24 @@ class MessageManager extends AbstractManager
     {
         parent::__construct(self::TABLE);
     }
+
     public function insertMessage(array $message)
     {
         // prepared request
-        $statement = $this->pdo->prepare(sprintf("INSERT INTO %s(conversation_id, pseudo, content, `current_date`) 
-        VALUES (1, :pseudo, :content, :current_date)", self::TABLE));
+        $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE. "(pseudo, content, date) 
+        VALUES (:pseudo, :content, :date)");
         $statement->bindValue('pseudo', $message['pseudo'], \PDO::PARAM_STR);
         $statement->bindValue('content', $message['content'], \PDO::PARAM_STR);
-        $statement->bindValue('current_date', $message['current_date'], \PDO::PARAM_STR);
+        $statement->bindValue('date', $message['date'], \PDO::PARAM_STR);
 
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();
         }
+    }
+    public function showMessage(): array
+    {
+        $statement = $this->pdo->prepare("SELECT * FROM " . self::TABLE. " ORDER BY date DESC LIMIT 0, 10");
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }

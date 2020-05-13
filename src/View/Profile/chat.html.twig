@@ -5,8 +5,16 @@
     <p>
         <label for="pseudo">Pseudo</label> : <input type="text" name="pseudo" id="pseudo" /><br />
         <label for="exampleFormControlTextarea1">Message</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="content" id="content" rows="3"></textarea>
         <button type="submit" class="btn btn-primary">Send</button>
     </p>
 </form>
+
+    {% for message in messages %}
+    <div>
+        <p>{{ message.pseudo }}</p>
+        <p>{{ message.content }}</p>
+        <p>{{ message.date }}</p>
+    </div>
+    {% endfor %}
 {% endblock %}

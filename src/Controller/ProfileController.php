@@ -118,14 +118,17 @@ class ProfileController extends AbstractController
         $date = date('Y/m/d G:i:s');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $messageManager = new MessageManager();
-            $comment = [
+            $message = [
                 'content' => $_POST['content'],
-                'current_date' => $date,
+                'date' => $date,
                 'pseudo' => $_POST['pseudo'],
 
             ];
-            $messageManager->insertMessage($comment);
+            $messageManager->insertMessage($message);
+            header("Location: /Profile/chat");
         }
-        return $this->twig->render('Profile/chat.html.twig', ['session' => $_SESSION]);
+        $messageManager = new MessageManager();
+        $messages = $messageManager->showMessage();
+        return $this->twig->render('Profile/chat.html.twig', ['messages' => $messages, 'session' => $_SESSION]);
     }
 }
