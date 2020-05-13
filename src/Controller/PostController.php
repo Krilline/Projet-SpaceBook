@@ -54,6 +54,7 @@ class PostController extends AbstractController
         $postManager = new PostManager();
         $postManager->delete($id);
         header('Location:/post/showPosts/' . $userId);
+    }
 
     public function showComments($id)
     {

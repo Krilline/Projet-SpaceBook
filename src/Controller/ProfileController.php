@@ -65,6 +65,9 @@ class ProfileController extends AbstractController
     {
         $profileManager = new ProfileManager();
         $profileManager->deleteUserProfile($id);
+        unset($_SESSION['login']);
+        unset($_SESSION['id']);
+        session_destroy();
         header("Location: /home/index");
     }
 
@@ -89,21 +92,24 @@ class ProfileController extends AbstractController
         return $this->twig->render('Profile/showFriend.html.twig', [ 'result'=> $result, 'session' => $_SESSION ]);
     }
 
-    public function allUser(){
+    public function allUser()
+    {
         $profileManager = new ProfileManager();
         $users = $profileManager->selectAllFriends();
         return $this->twig->render('Profile/allUser.html.twig', ['users' => $users, 'session' => $_SESSION]);
     }
 
-    public function profileUser($id){
+    public function profileUser($id)
+    {
         $profileManager = new ProfileManager();
         $user = $profileManager->selectUserProfile($id);
         return $this->twig->render('Profile/profileUser.html.twig', ['user' => $user, 'session' => $_SESSION]);
     }
 
-    public function addFriend($id){
+    public function addFriend($id)
+    {
         $friendManager = new FriendManager();
-        $addFriend = $friendManager->addFriend($id);
-        header( 'Location: /profile/showFriend/'.$_SESSION['id']);
+        $friendManager->addFriend($id);
+        header('Location: /profile/showFriend/'.$_SESSION['id']);
     }
 }
