@@ -58,18 +58,23 @@ class PostController extends AbstractController
 
     public function showComments($id)
     {
+        $postManager = new PostManager();
+        $post = $postManager->selectOneById($id);
         $commentManager = new CommentManager();
         $comments = $commentManager->selectComments($id);
-        return $this->twig->render('Posts/comments.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
+        return $this->twig->render('Posts/comments.html.twig', [
+            'comments' => $comments,
+            'session' => $_SESSION,
+            'post' => $post
+        ]);
     }
 
     public function addComment($id)
     {
-        $postManager = new PostManager();
-        $post = $postManager->selectOneById($id);
-        $date = date('Y/m/d G:i:s');
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $postManager = new PostManager();
+            $post = $postManager->selectOneById($id);
+            $date = date('Y/m/d G:i:s');
             $commentManager = new CommentManager();
             $comment = [
                 'content' => $_POST['content'],
@@ -106,5 +111,11 @@ class PostController extends AbstractController
         $commentManager->deleteComment($id);
         header('Location:/post/showComments/' . $comment['post_id']);
     }
-}
 
+    public function like(int $id)
+    {
+        $postManager = new PostManager();
+        $postManager->like($id);
+        header('Location:/Home/index');
+    }
+}

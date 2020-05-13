@@ -68,4 +68,12 @@ class PostManager extends AbstractManager
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
     }
+
+    public function like($id): void
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE ".self::TABLE." SET score = score + 1 WHERE id =:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+    }
 }

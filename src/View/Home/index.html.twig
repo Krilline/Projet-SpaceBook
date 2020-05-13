@@ -23,4 +23,28 @@
             </div>
         </section>
         {% endif %}
+        <!-- PARTIE SI ON EST CONNECTE-->
+        {% if session.login %}
+            <div class="container-fluid">
+                <div class="row">
+                    {% for posts in post %}
+                        {% for post in posts %}
+                        <div class="card col-11 mt-3 mr-2 bg-light mb-3">
+                            <div class="card-header">From {{ post.user_pseudo }}</div>
+                            <div class="card-body">
+                                {% if post.img %}
+                                    <img class="card-img-top" src="{{ post.img }}" alt="post image">
+                                {% endif %}
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.content }}</p>
+                                <p class="card-text">Likes {{ post.score }}</p>
+                                <a href="/post/showComments/{{ post.id }}" class="btn-edit">Comments</a>
+                                <a href="/post/like/{{ post.id }}" class="btn-show">Like</a>
+                            </div>
+                        </div>
+                            {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     {% endblock %}
