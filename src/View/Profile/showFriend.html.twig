@@ -2,6 +2,7 @@
 
 {% block content %}
 {% for results in result %}
+
     <div class="cardFriend bg-lightFriend mb-3" style="max-width: 30rem;">
         <div class="card-header"><h1 class="name-profile">{{ results.firstname }}</h1></div>
         <div class="card-body">
@@ -10,8 +11,5 @@
         </div>
     </div>
 
-    <!--<img src="{{ results.avatar }}" class="img-profile" alt="avatar">
-    <h1 class="name-profile">{{ results.firstname }}</h1>
-    <a href="/profile/deleteFriend/{{ results.id }}" class="btn-delete" role="button" aria-pressed="true">Delete Friend</a>-->
     {% endfor %}
 {% endblock %}

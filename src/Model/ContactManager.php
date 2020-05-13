@@ -36,4 +36,12 @@ class ContactManager extends AbstractManager
             return (int)$this->pdo->lastInsertId();
         }
     }
+
+    public function deleteMessageById(int $id): void
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+    }
 }

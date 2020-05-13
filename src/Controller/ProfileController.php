@@ -65,6 +65,9 @@ class ProfileController extends AbstractController
     {
         $profileManager = new ProfileManager();
         $profileManager->deleteUserProfile($id);
+        unset($_SESSION['login']);
+        unset($_SESSION['id']);
+        session_destroy();
         header("Location: /home/index");
     }
 
@@ -113,7 +116,7 @@ class ProfileController extends AbstractController
     public function addFriend($id)
     {
         $friendManager = new FriendManager();
-        $addFriend = $friendManager->addFriend($id);
+        $friendManager->addFriend($id);
         header('Location: /profile/showFriend/'.$_SESSION['id']);
     }
 }
