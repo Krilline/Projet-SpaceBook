@@ -50,6 +50,7 @@ class CommentManager extends AbstractManager
         $statement->execute();
     }
 
+
     public function updateComment(array $comment): bool
     {
         $statement = $this->pdo->prepare("UPDATE " . self::TABLE .

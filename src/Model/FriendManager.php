@@ -37,20 +37,21 @@ class FriendManager extends AbstractManager
 
     public function deleteFriends($id)
     {
-        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " WHERE friend_id = :friend_id AND user_id = :user_id");
+        $statement = $this->pdo->prepare("DELETE FROM " . self::TABLE . " 
+        WHERE friend_id = :friend_id AND user_id = :user_id");
         $statement->bindValue('friend_id', $id, \PDO::PARAM_INT);
         $statement->bindValue('user_id', $_SESSION['id'], \PDO::PARAM_INT);
 
         $statement->execute();
     }
 
-    public function addFriend($id){
-        $statement = $this->pdo->prepare( " INSERT INTO " .self::TABLE. " (user_id, friend_id, status_id)  
+    public function addFriend($id)
+    {
+        $statement = $this->pdo->prepare(" INSERT INTO " .self::TABLE. " (user_id, friend_id, status_id)  
         SELECT :user_id, :friend_id, 2 FROM DUAL 
         WHERE NOT EXISTS (SELECT * FROM " .self::TABLE. "  WHERE user_id=:user_id AND friend_id=:friend_id LIMIT 1 )");
         $statement->bindValue('friend_id', $id, \PDO::PARAM_INT);
         $statement->bindValue('user_id', $_SESSION['id'], \PDO::PARAM_INT);
         $statement->execute();
-
     }
 }
