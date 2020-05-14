@@ -66,6 +66,11 @@ footer .nav-link{
     text-align: justify;
 }
 
+.text-bio{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 15px;
+}
+
 .text{
     margin-right: 12%;
 }

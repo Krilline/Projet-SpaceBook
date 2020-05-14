@@ -135,7 +135,7 @@ class HomeController extends AbstractController
         $mail->isHTML(true);
         $mail->setFrom("paulfromendor@gmail.com", "Paul the Admin");
         $mail->addAddress($_SESSION['emailcontact']);
-        $mail->addEmbeddedImage('../public/assets/images/catworking.gif', "working", "catworking.gif");
+        $mail->addEmbeddedImage('../public/assets/images/working.jpg', "working", "working.jpg");
         $mail->Subject = "Contact Us";
         $mail->Body = "<h1>Your demand is under review</h1><br>
         <img src='cid:working' alt='working'>
