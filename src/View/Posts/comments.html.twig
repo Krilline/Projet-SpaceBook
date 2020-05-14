@@ -3,9 +3,9 @@
 {% block content %}
     {% if comments %}
         <h3>Your Post</h3>
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-mx-10">
+        <div class="">
+            <div class="">
+                <div class="card col-11 mt-3 mr- bg-light mb-3">
                     <div class="card-body">
                         {% if comments.post_img %}
                             <div class="col-md-8">
@@ -23,25 +23,25 @@
         <div></div>
     {% endif %}
     <h3>Comments</h3>
-    <a href="/post/addComment/{{ post.id }}" class="btn-edit" role="button" aria-pressed="true">  ADD A NEW COMMENT  </a>
+    <a href="/post/addComment/{{ post.id }}" class="btn-editComment" role="button" aria-pressed="true">  ADD A NEW COMMENT  </a>
     <br/><br/>
-    <div class="card mb-3">
-        <div class="row no-gutters">
+    <div class="">
+        <div class="">
                 {% for comment in comments %}
-            <div class="card col-11 mt-3 mr-2 bg-light mb-3">
+            <div class="card col-11 mt-3 mr- bg-light mb-3">
                     <div class="card-body">
                         <p class="card-text">Comment #{{ comment.id }} </p>
                         <p class="card-text">User Name: {{ comment.user_firstname }} {{ comment.user_lastname }}</p>
                         <p class="card-text">Date: {{ comment.current_date }} </p>
                         <p class="card-text">Content : {{ comment.content }} </p>
-                        <a href="/post/editComment/{{ comment.id }}" class="btn-edit" role="button" aria-pressed="true">Edit Comment</a>
-                        <a href="/post/deleteComment/{{ comment.id }}" class="btn-delete" role="button" aria-pressed="true">Delete Comment</a>
+                        <a href="/post/editComment/{{ comment.id }}" class="btn-editComment" role="button" aria-pressed="true">Edit Comment</a>
+                        <a href="/post/deleteComment/{{ comment.id }}" class="btn-deleteComment" role="button" aria-pressed="true">Delete Comment</a>
                     </div>
             </div>
                 {% else %}
-                    <p>No comment to display</p>
+                    <p class="noComment">No comment to display</p>
                 {% endfor %}
-                <a href="/post/showPosts/{{ session.id }}">Back to Posts</a>
+                <a class="btn-backComment" href="/post/showPosts/{{ session.id }}">Back to Posts</a>
         </div>
     </div>
 {% endblock %}
